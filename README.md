@@ -29,13 +29,6 @@ Esta API permite gestionar un conjunto de datos de superhéroes. Puedes:
 - Express.js
 - MongoDB y Mongoose
 
-## Requisitos
-- Node.js
-- MongoDB (en local o en un servicio en la nube como MongoDB Atlas)
-- Postman (opcional, para pruebas)
-
-## Autor: Vilma Ponce
-
 ## Tabla de Contenidos
 - [Descripción](#descripción)
 - [Tecnologías Usadas](#tecnologías-usadas)
