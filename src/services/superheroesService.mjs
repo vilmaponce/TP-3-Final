@@ -1,9 +1,12 @@
 import superHeroRepository from '../repositories/SuperHeroRepository.mjs';
+// services/superheroesService.mjs
+import SuperHero from '../models/SuperHero.mjs';
 
+// Tu código para obtener superhéroes
 
 
 export async function obtenerSuperheroePorId(id) {
-  return await Superheroe.findById(id).exec(); // Esto busca por el ID
+  return await SuperHero.findById(id).exec(); // Esto busca por el ID
 }
 
 export async function obtenerTodosLosSuperheroes() {

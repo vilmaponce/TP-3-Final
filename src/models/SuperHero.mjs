@@ -13,4 +13,4 @@ const superheroSchema = new mongoose.Schema({
     
 });
 
-export default mongoose.model('Grupo-02', superheroSchema, 'Grupo-02');
+export default mongoose.model('SuperHero', superheroSchema, 'Grupo-02');
