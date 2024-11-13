@@ -6,7 +6,7 @@ export async function connectDB() {
             
         });
 
-        console.log('Conexión exitosa a MongoDB');
+        console.log('Conexión exitosa a MongoDB-Vilma Ponce');
     } catch (error) {
         console.log('Error de conexión a MongoDB:', error);
         process.exit(1); // Detiene la aplicación si no se puede conectar

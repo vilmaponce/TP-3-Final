@@ -9,6 +9,7 @@ const superheroSchema = new mongoose.Schema({
     poderes: [String],
     aliados: [String],
     enemigos: [String],
+    autor: { type: String, default: 'Vilma Ponce' },
     createdAt: { type: Date, default: Date.now }
     
 });

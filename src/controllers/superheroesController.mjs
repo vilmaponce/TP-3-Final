@@ -5,7 +5,7 @@ import {
   buscarSuperheroesPorAtributo,
   obtenerSuperheroesMayoresDe30YconFiltros
 } from '../services/superheroesService.mjs';
-
+import superHeroRepository from '../repositories/SuperHeroRepository.mjs';
 
 import { renderizarSuperheroe, renderizarListaSuperheroes } from '../views/responseView.mjs';
 
@@ -95,3 +95,74 @@ export async function obtenerSuperheroesMayoresDe30YConFiltrosController(req, re
 }
 
 
+//Nuevas Peticiones 
+
+// Controlador para crear un superhéroe
+export async function crearSuperheroeController(req, res) {
+  const { nombreSuperHeroe, nombreReal, edad, planetaOrigen, debilidad, poderes, aliados, enemigos } = req.body;
+
+  try {
+    // Crear el superhéroe utilizando el repositorio
+    const nuevoSuperheroe = await superHeroRepository.crearSuperheroe({
+      nombreSuperHeroe,
+      nombreReal,
+      edad,
+      planetaOrigen,
+      debilidad,
+      poderes,
+      aliados,
+      enemigos
+    });
+
+    // Responder con el superhéroe creado
+    res.status(201).send({ mensaje: "Superhéroe creado correctamente", superheroe: nuevoSuperheroe });
+  } catch (error) {
+    // Manejo de errores
+    console.error("Error al crear superhéroe:", error);
+    res.status(500).send({ mensaje: "Error interno del servidor" });
+  }
+}
+
+export async function actualizarSuperheroeController(req, res) {
+  const { id } = req.params;
+  const { nombreSuperHeroe, nombreReal, edad, planetaOrigen, debilidad, poderes, aliados, enemigos } = req.body;
+
+  try {
+    const superheroeActualizado = await superHeroRepository.actualizarSuperheroe(id, {
+      nombreSuperHeroe,
+      nombreReal,
+      edad,
+      planetaOrigen,
+      debilidad,
+      poderes,
+      aliados,
+      enemigos
+    });
+
+    if (superheroeActualizado) {
+      res.send(renderizarSuperheroe(superheroeActualizado));
+    } else {
+      res.status(404).send({ mensaje: "Superhéroe no encontrado" });
+    }
+  } catch (error) {
+    console.error("Error al actualizar superhéroe:", error);
+    res.status(500).send({ mensaje: "Error interno del servidor" });
+  }
+}
+
+export async function eliminarSuperheroeController(req, res) {
+  const { id } = req.params;
+
+  try {
+    const superheroeEliminado = await superHeroRepository.eliminarSuperheroe(id);
+
+    if (superheroeEliminado) {
+      res.status(200).send({ mensaje: "Superhéroe eliminado correctamente" });
+    } else {
+      res.status(404).send({ mensaje: "Superhéroe no encontrado" });
+    }
+  } catch (error) {
+    console.error("Error al eliminar superhéroe:", error);
+    res.status(500).send({ mensaje: "Error interno del servidor" });
+  }
+}
