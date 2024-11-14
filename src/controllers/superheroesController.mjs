@@ -6,6 +6,7 @@ import {
   obtenerSuperheroesMayoresDe30YconFiltros
 } from '../services/superheroesService.mjs';
 import superHeroRepository from '../repositories/SuperHeroRepository.mjs';
+import { validationResult } from 'express-validator';
 
 import { renderizarSuperheroe, renderizarListaSuperheroes } from '../views/responseView.mjs';
 
@@ -99,10 +100,15 @@ export async function obtenerSuperheroesMayoresDe30YConFiltrosController(req, re
 
 // Controlador para crear un superhéroe
 export async function crearSuperheroeController(req, res) {
+  const errors = validationResult(req); // Verifica si hay errores de validación
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errores: errors.array() });
+  }
+
   const { nombreSuperHeroe, nombreReal, edad, planetaOrigen, debilidad, poderes, aliados, enemigos } = req.body;
 
   try {
-    // Crear el superhéroe utilizando el repositorio
     const nuevoSuperheroe = await superHeroRepository.crearSuperheroe({
       nombreSuperHeroe,
       nombreReal,
@@ -114,10 +120,8 @@ export async function crearSuperheroeController(req, res) {
       enemigos
     });
 
-    // Responder con el superhéroe creado
     res.status(201).send({ mensaje: "Superhéroe creado correctamente", superheroe: nuevoSuperheroe });
   } catch (error) {
-    // Manejo de errores
     console.error("Error al crear superhéroe:", error);
     res.status(500).send({ mensaje: "Error interno del servidor" });
   }
