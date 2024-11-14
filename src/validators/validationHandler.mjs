@@ -1,5 +1,5 @@
 // src/validators/validationHandler.mjs
-import { validationResult } from 'express-validator';  // Solo una vez
+import { validationResult } from 'express-validator';  
 
 export const validationHandler = (req, res, next) => {
   // Obtener los resultados de la validación
